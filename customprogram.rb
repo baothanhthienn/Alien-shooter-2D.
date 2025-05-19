@@ -86,7 +86,7 @@ class FramInvaders < Gosu::Window
             @x = x
             @y = y 
             @image = Gosu::Image.load_tiles('Images/ship.png', 156 , 152)
-            @center = 20 
+            @center = 75
             @lives = 5 
             @score = 0  
 
@@ -421,7 +421,7 @@ class FramInvaders < Gosu::Window
         #decrease health if boss hit player 
         @boss.each do |boss|
           
-            distance = Gosu.distance(boss.x, boss.y, @player.x, @player.y)
+            distance = Gosu.distance(boss.x, boss.y, @player.x + 78, @player.y + 76)
             if distance < boss.center + @player.center 
                @boss.delete boss 
                @explosions.push Explosion.new(boss.x, boss.y)
@@ -450,7 +450,7 @@ class FramInvaders < Gosu::Window
         #delete alien spaceship and decrease player's health if the alien spaceship hit the player 
         @alienships.each do |ufo|
           
-            distance = Gosu.distance(ufo.x, ufo.y, @player.x, @player.y)
+            distance = Gosu.distance(ufo.x, ufo.y, @player.x + 78, @player.y + 76)
             if distance < ufo.center + @player.center 
               @alienships.delete ufo 
               @explosions.push Explosion.new(ufo.x, ufo.y,)
@@ -466,7 +466,7 @@ class FramInvaders < Gosu::Window
         #decrease player's health if boss shoots the player successfully
         @bosslaser.each do |bosslaser|
             
-            distance = Gosu.distance(bosslaser.x, bosslaser.y, @player.x, @player.y)
+            distance = Gosu.distance(bosslaser.x, bosslaser.y, @player.x + 78, @player.y + 76)
             if distance < bosslaser.center + @player.center
                 @bosslaser.delete bosslaser
                 @explosions.push Explosion.new(bosslaser.x, bosslaser.y)
@@ -479,7 +479,7 @@ class FramInvaders < Gosu::Window
         #increase health if player hit the heart
         @hearts.each do |heart|
             
-            distance = Gosu.distance(heart.x, heart.y, @player.x, @player.y)
+            distance = Gosu.distance(heart.x, heart.y, @player.x + 78, @player.y + 76)
             if distance < heart.center + @player.center
                 @hearts.delete heart
                 @bloods.push Blood.new(heart.x, heart.y)
@@ -491,7 +491,7 @@ class FramInvaders < Gosu::Window
             
             @coins.each do |coin|   #increase score if player hit the coin
             
-                distance = Gosu.distance(coin.x, coin.y, @player.x, @player.y)
+                distance = Gosu.distance(coin.x, coin.y, @player.x + 78, @player.y + 76)
                 if distance < coin.center + @player.center
                     @coins.delete coin
                     @bloods.push Blood.new(heart.x, heart.y)
