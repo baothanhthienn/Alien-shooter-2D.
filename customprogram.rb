@@ -112,9 +112,9 @@ class FramInvaders < Gosu::Window
         end
     end
     def move_down(player)
-        player.y +=7
-        if player.y >= 800 
-           player.y = 800 
+        player.y += 7
+        if player.y >= 648
+           player.y = 648
         end
     end
     def draw_player(player)
