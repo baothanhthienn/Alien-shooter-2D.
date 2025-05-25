@@ -10,7 +10,7 @@ end
 
 class FramInvaders < Gosu::Window 
     MAX_ENEMIES = 200 
-     WIDTH = 1000 
+    WIDTH = 1000 
     HEIGHT = 800 
     def initialize 
         super(WIDTH, HEIGHT) #create window game 
@@ -354,14 +354,20 @@ class FramInvaders < Gosu::Window
     else 
         @choice2 = Gosu::Color::BLACK 
     end
+    if mouse_over_button(mouse_x, mouse_y,300,300,450,350)
+        @choice3 = Gosu::Color::BLUE
+    else 
+        @choice3 = Gosu::Color::BLACK 
     end 
+    end
 
     def update_game 
-    #moving function of player 
+        #moving function of player 
         move_left @player if Gosu.button_down? Gosu::KB_LEFT 
         move_right @player if Gosu.button_down? Gosu::KB_RIGHT 
         move_up @player if Gosu.button_down? Gosu::KB_UP 
         move_down @player if Gosu.button_down? Gosu::KB_DOWN 
+
         if rand < @enemy_rate 
             @alienships.push (Alienship.new())
             @enemies_appeared += 1
@@ -493,7 +499,6 @@ class FramInvaders < Gosu::Window
                distance = Gosu.distance(coin.x, coin.y, @player.x + @player.center, @player.y + @player.center)
             if distance < coin.center + @player.center
                     @coins.delete coin
-                    @bloods.push Blood.new(coin.x, coin.y)
                     @player.score += 100
                     @coin_absorp.play
             end
@@ -578,8 +583,7 @@ class FramInvaders < Gosu::Window
       # Easy mode or fallback: Single bullet
             @bullets.push Bullet.new(@player.x + @player.center, @player.y)
        end
-
-    @shooting_sound.play(1)
+        @shooting_sound.play(1)
        end
     end
 
@@ -637,6 +641,7 @@ class FramInvaders < Gosu::Window
         Gosu.draw_rect(300 ,100, 150, 50, Gosu::Color::GREEN)
         Gosu.draw_rect(300 ,200, 150, 50, Gosu::Color::YELLOW) 
         Gosu.draw_rect(300 ,300, 150, 50, Gosu::Color::RED)
+        
 
 
     end
