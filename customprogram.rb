@@ -479,28 +479,26 @@ class FramInvaders < Gosu::Window
         #increase health if player hit the heart
         @hearts.each do |heart|
             
-            distance = Gosu.distance(heart.x, heart.y, @player.x + 78, @player.y + 76)
+            distance = Gosu.distance(heart.x, heart.y, @player.x + @player.center, @player.y + @player.center)
             if distance < heart.center + @player.center
-                @hearts.delete heart
-                @bloods.push Blood.new(heart.x, heart.y)
-                
-                @player.lives +=1
-                @coin_absorp.play
+                    @hearts.delete heart
+                    @bloods.push Blood.new(heart.x, heart.y)
+                    @player.lives += 1
+                    @coin_absorp.play
             end
 
             
             @coins.each do |coin|   #increase score if player hit the coin
             
-                distance = Gosu.distance(coin.x, coin.y, @player.x + 78, @player.y + 76)
-                if distance < coin.center + @player.center
+               distance = Gosu.distance(coin.x, coin.y, @player.x + @player.center, @player.y + @player.center)
+            if distance < coin.center + @player.center
                     @coins.delete coin
-                    @bloods.push Blood.new(heart.x, heart.y)
-                    
-                    @player.score +=100
+                    @bloods.push Blood.new(coin.x, coin.y)
+                    @player.score += 100
                     @coin_absorp.play
-                end
             end
         end
+    end
 
           self.remove_bloods 
           self.remove_explosions 
@@ -543,9 +541,45 @@ class FramInvaders < Gosu::Window
     end
 
     def button_down_game(id)
-       if id == Gosu::KbSpace 
-         @bullets.push Bullet.new(@player.x + @player.center, @player.y)
-         @shooting_sound.play(1)
+       if id == Gosu::KbSpace
+       if @difficulty == :hard
+       if @player.score >= 1000
+        # Triple bullet
+            @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
+       elsif @player.score >= 500
+        # Double bullet
+            @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
+       else
+        # Single bullet
+             @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+       end
+
+       elsif @difficulty == :insane
+      if @player.score >= 10000
+        # Four bullets
+            @bullets.push Bullet.new(@player.x + @player.center - 20, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center - 7, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center + 7, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center + 20, @player.y)
+      elsif @player.score >= 1000
+        # Triple bullet
+            @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
+      else
+        # Single bullet
+            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+      end
+
+       else
+      # Easy mode or fallback: Single bullet
+            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+       end
+
+    @shooting_sound.play(1)
        end
     end
 
@@ -664,6 +698,7 @@ class FramInvaders < Gosu::Window
     def draw_end        
         @message_font.draw(@message,40,240,ZOrder::UI,1,1,Gosu::Color::RED)
         @message_font.draw(@message2,40,275,ZOrder::UI,1,1,Gosu::Color::RED)
+        @message_font.draw(@message3, 40, 310, ZOrder::UI, 1, 1, Gosu::Color::RED)
         @message_font.draw(@bottom_message,180,540,ZOrder::UI,1,1,Gosu::Color::RED)
     end
 
