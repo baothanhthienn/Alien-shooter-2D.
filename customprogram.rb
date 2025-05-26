@@ -548,12 +548,12 @@ class FramInvaders < Gosu::Window
     def button_down_game(id)
        if id == Gosu::KbSpace
        if @difficulty == :hard
-       if @player.score >= 1000
+       if @player.score >= 5000
         # Triple bullet
             @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
-       elsif @player.score >= 500
+       elsif @player.score >= 900
         # Double bullet
             @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
@@ -563,13 +563,17 @@ class FramInvaders < Gosu::Window
        end
 
        elsif @difficulty == :insane
-      if @player.score >= 10000
+      if @player.score >= 15000
         # Four bullets
             @bullets.push Bullet.new(@player.x + @player.center - 20, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center - 7, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 7, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 20, @player.y)
-      elsif @player.score >= 1000
+      elsif @player.score >= 900
+        # Double bullet
+            @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
+            @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
+      elsif @player.score >= 5000
         # Triple bullet
             @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center, @player.y)
