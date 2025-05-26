@@ -548,12 +548,12 @@ class FramInvaders < Gosu::Window
     def button_down_game(id)
        if id == Gosu::KbSpace
        if @difficulty == :hard
-       if @player.score >= 5000
+       if @player.score >= 6000
         # Triple bullet
             @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
-       elsif @player.score >= 900
+       elsif @player.score >= 1000
         # Double bullet
             @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
