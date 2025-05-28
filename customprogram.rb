@@ -8,7 +8,7 @@ end
 
 
 
-class FramInvaders < Gosu::Window 
+class AlienShooter2D < Gosu::Window 
     MAX_ENEMIES = 200 
     WIDTH = 1000 
     HEIGHT = 800 
@@ -734,4 +734,4 @@ class FramInvaders < Gosu::Window
     end
 end
 
-FramInvaders.new.show 
+AlienShooter2D.new.show 
