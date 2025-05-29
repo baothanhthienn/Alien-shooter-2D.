@@ -563,17 +563,17 @@ class AlienShooter2D < Gosu::Window
        end
 
        elsif @difficulty == :insane
-      if @player.score >= 15000
+      if @player.score >= 16000
         # Four bullets
             @bullets.push Bullet.new(@player.x + @player.center - 20, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center - 7, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 7, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 20, @player.y)
-      elsif @player.score >= 900
+      elsif @player.score >= 1000
         # Double bullet
             @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
-      elsif @player.score >= 5000
+      elsif @player.score >= 8000
         # Triple bullet
             @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
             @bullets.push Bullet.new(@player.x + @player.center, @player.y)
@@ -623,13 +623,16 @@ class AlienShooter2D < Gosu::Window
               @image_index = 0 
            end
         end
+        @last_theme_update ||= 0
+        if Gosu.milliseconds - @last_theme_update > 100  # Change frame every 100ms
+        @image_index1 = (@image_index1 + 1) % @image_theme1.count
+        @last_theme_update = Gosu.milliseconds
+        end
         if @image_index1 < @image_theme1.count
             @image_theme1[@image_index1].draw(650, 115 , 2)  #draw button
-            sleep(0.05)
             @image_theme1[@image_index1].draw(650, 215 , 2)
-            sleep(0.05)
             @image_theme1[@image_index1].draw(650, 315 , 2)
-            sleep(0.05)
+
             @image_index1 +=1 
             if @image_index1 == @image_theme1.count
                 @image_index1 = 0 
