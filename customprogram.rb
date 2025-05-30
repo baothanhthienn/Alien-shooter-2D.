@@ -600,7 +600,7 @@ class AlienShooter2D < Gosu::Window
     end
 
     def need_cursor? 
-        true 
+         @scene == :start || @scene == :end
     end
 
     def mouse_over_button(mouse_x, mouse_y, leftX, topY, rightX, botY)
