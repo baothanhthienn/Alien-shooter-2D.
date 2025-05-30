@@ -493,11 +493,10 @@ class AlienShooter2D < Gosu::Window
                     @coin_absorp.play
             end
 
-            
+            @coin_spawn_time ||= Gosu.milliseconds
             @coins.each do |coin|   #increase score if player hit the coin
-            
-               distance = Gosu.distance(coin.x, coin.y, @player.x + @player.center, @player.y + @player.center)
-            if distance < coin.center + @player.center
+            distance = Gosu.distance(coin.x, coin.y, @player.x + @player.center, @player.y + @player.center)
+            if distance < coin.center + @player.center 
                     @coins.delete coin
                     @player.score += 100
                     @coin_absorp.play
