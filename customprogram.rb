@@ -14,7 +14,7 @@ class AlienShooter2D < Gosu::Window
     HEIGHT = 800 
     def initialize 
         super(WIDTH, HEIGHT) #create window game 
-        self.caption = "Fram Invader"
+        self.caption = "AlienShooter2D"
         #setting up the srtat screen of the game 
         @background_image = Gosu::Image.new('Images/start_screen.jpeg')
         @background_game = Gosu::Image.new('Images/space.jpeg')
