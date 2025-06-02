@@ -680,11 +680,13 @@ class AlienShooter2D < Gosu::Window
         @bosslaser.each do |bosslaser|
             draw_bosslaser(bosslaser)
         end
-        @font.draw_text("Enemies left: #{MAX_ENEMIES - (@enemies_appeared || 0)}", 600,0,ZOrder::UI)
-        @font.draw_text("Score: #{@player.score}", 600,50,ZOrder::UI)
-        @font.draw_text("Lives: #{@player.lives}", 800,50,ZOrder::UI)
-        #@font.draw("Ammo: #{@reload}", 800,0,0)
         
+        @custom_color = Gosu::Color.rgba(255, 60, 60, 255)
+
+        @font.draw_text("Enemies left: #{MAX_ENEMIES - (@enemies_appeared || 0)}", 600, 0, ZOrder::UI, 1, 1, @custom_color)
+        @font.draw_text("Score: #{@player.score}", 600, 50, ZOrder::UI, 1, 1, @custom_color)
+        @font.draw_text("Lives: #{@player.lives}", 800, 50, ZOrder::UI, 1, 1, @custom_color)
+
         offset_x, offset_y = 0, 0
         if @shake_timer > 0
             offset_x, offset_y = @shake_offsets[10 - @shake_timer]
@@ -702,9 +704,11 @@ class AlienShooter2D < Gosu::Window
         @boss.each { |boss| draw_boss(boss) }
         @bosslaser.each { |bosslaser| draw_bosslaser(bosslaser) }
 
-        @font.draw_text("Enemies left: #{MAX_ENEMIES - (@enemies_appeared || 0)}", 600, 0, ZOrder::UI)
-        @font.draw_text("Score: #{@player.score}", 600, 50, ZOrder::UI)
-        @font.draw_text("Lives: #{@player.lives}", 800, 50, ZOrder::UI)
+       @custom_color = Gosu::Color.rgba(255, 60, 60, 255)
+
+        @font.draw_text("Enemies left: #{MAX_ENEMIES - (@enemies_appeared || 0)}", 600, 0, ZOrder::UI, 1, 1, @custom_color)
+        @font.draw_text("Score: #{@player.score}", 600, 50, ZOrder::UI, 1, 1, @custom_color)
+        @font.draw_text("Lives: #{@player.lives}", 800, 50, ZOrder::UI, 1, 1, @custom_color)
     end
 
     def draw_end        
