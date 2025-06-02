@@ -76,7 +76,9 @@ class AlienShooter2D < Gosu::Window
       @scene = :end 
       @ending_music = Gosu::Song.new('Sounds/endingtheme.mp3')
       @ending_music.play(true)
+      
     end
+
 
     class Player 
   
@@ -546,50 +548,52 @@ class AlienShooter2D < Gosu::Window
     end
 
     def button_down_game(id)
-       if id == Gosu::KbSpace
-       if @difficulty == :hard
-       if @player.score >= 6000
+  if id == Gosu::KbSpace
+    if @difficulty == :hard
+      if @player.score >= 6000
         # Triple bullet
-            @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
-       elsif @player.score >= 1000
-        # Double bullet
-            @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
-       else
-        # Single bullet
-             @bullets.push Bullet.new(@player.x + @player.center, @player.y)
-       end
-
-       elsif @difficulty == :insane
-      if @player.score >= 16000
-        # Four bullets
-            @bullets.push Bullet.new(@player.x + @player.center - 20, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center - 7, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center + 7, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center + 20, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
       elsif @player.score >= 1000
         # Double bullet
-            @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
-      elsif @player.score >= 8000
-        # Triple bullet
-            @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
-            @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
       else
         # Single bullet
-            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center, @player.y)
       end
 
-       else
-      # Easy mode or fallback: Single bullet
-            @bullets.push Bullet.new(@player.x + @player.center, @player.y)
-       end
-        @shooting_sound.play(1)
-       end
+    elsif @difficulty == :insane
+      if @player.score >= 16000
+        # Four bullets
+        @bullets.push Bullet.new(@player.x + @player.center - 20, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center - 7, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center + 7, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center + 20, @player.y)
+      elsif @player.score >= 8000
+        # Triple bullet
+        @bullets.push Bullet.new(@player.x + @player.center - 15, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center + 15, @player.y)
+      elsif @player.score >= 1000
+        # Double bullet
+        @bullets.push Bullet.new(@player.x + @player.center - 10, @player.y)
+        @bullets.push Bullet.new(@player.x + @player.center + 10, @player.y)
+      else
+        # Single bullet
+        @bullets.push Bullet.new(@player.x + @player.center, @player.y)
+      end
+
+    else
+      # Easy mode or fallback
+      @bullets.push Bullet.new(@player.x + @player.center, @player.y)
     end
+
+    @shooting_sound.play(1)
+  end
+end
+
 
     def button_down_end(id)
         if id == Gosu::KbP 
