@@ -1,7 +1,7 @@
 #made by Nguyen Gia Bao Pham 
 require 'gosu'
 require_relative './models/score'
-
+ENV['TZ'] = 'Australia/Melbourne'
 module ZOrder 
   BACKGROUND, PLAYER, ALIENSHIP, BULLET, BLOOD, EXPLOSION, BOSS, HEART, COIN, BOSSLASER, UI = *0..10 
 end
@@ -24,6 +24,8 @@ class AlienShooter2D < Gosu::Window
         @image_index = 0
         @image_index1 = 0
         @scene = :start 
+        @scene = :name_input 
+        @player_name = ""
         @font = Gosu::Font.new(25)
         @start_music = Gosu::Song.new('Sounds/maintheme.mp3')
         @start_music.play(true)
@@ -78,7 +80,7 @@ class AlienShooter2D < Gosu::Window
       @scene = :end 
       @ending_music = Gosu::Song.new('Sounds/endingtheme.mp3')
       @ending_music.play(true)
-    ::Score.create(name: "Bao", score: @player.score, difficulty: @difficulty.to_s, created_at: Time.now)
+    ::Score.create(name: @player_name, score: @player.score, difficulty: @difficulty.to_s, created_at: Time.now.getlocal("+10:00"))
 
     end
 
@@ -366,6 +368,18 @@ class AlienShooter2D < Gosu::Window
     end 
     end
 
+    def draw_name_input
+        @background_image.draw(0, 0, ZOrder::BACKGROUND)
+        @font.draw_text("Enter your name:", 350, 200, ZOrder::UI, 1.5, 1.5, Gosu::Color::WHITE)
+        @font.draw_text(@player_name +  "|", 350, 250, ZOrder::UI, 1.5, 1.5, Gosu::Color::YELLOW)
+        @font.draw_text("Press Enter to continue", 280, 320, ZOrder::UI, 1, 1, Gosu::Color::GRAY)
+    end
+
+    def update_name_input
+  
+    end
+
+
     def update_game 
         #moving function of player 
         move_left @player if Gosu.button_down? Gosu::KB_LEFT 
@@ -375,10 +389,10 @@ class AlienShooter2D < Gosu::Window
 
         if @player.lives <= 0 && !@score_saved
             Score.create(
-                name: "Bao",
+                name: @player_name,
                 score: @player.score,
                 difficulty: @difficulty.to_s,
-                created_at: Time.now
+                created_at: Time.now.getlocal("+10:00")
             )
             @score_saved = true  # To prevent double saving
         end
@@ -530,6 +544,8 @@ class AlienShooter2D < Gosu::Window
 
     def button_down(id)
         case @scene 
+        when :name_input
+            button_down_name_input(id)
         when :start 
             button_down_start(id)
         when :ingame 
@@ -538,6 +554,26 @@ class AlienShooter2D < Gosu::Window
             button_down_end(id)
         end
     end
+
+    #Define possible way for player's name 
+    def button_down_name_input(id)
+        if id == Gosu::KbReturn
+        if @player_name.strip != ""
+            @scene = :start  # proceed to start menu
+        end
+        elsif id == Gosu::KbBackspace
+            @player_name.chop!
+        elsif id == Gosu::KbSpace
+            @player_name += " " if @player_name.length < 20  # space allowed for multi-word names
+        elsif id.between?(Gosu::KbA, Gosu::KbZ)
+            @player_name += (65 + (id - Gosu::KbA)).chr if @player_name.length < 20
+        elsif id.between?(Gosu::Kb0, Gosu::Kb9)
+            @player_name += (id - Gosu::Kb0).to_s if @player_name.length < 20
+        elsif id >= 32 && id <= 126  # allows symbols like ! @ # $ etc.
+            @player_name += id.chr if @player_name.length < 20
+        end
+    end
+
 
     def button_down_start(id)
         if id == Gosu::MsLeft #enemy rate in easy mode 
@@ -560,6 +596,7 @@ class AlienShooter2D < Gosu::Window
         end 
     end
 
+    #Bullets mechanism for each mode 
     def button_down_game(id)
   if id == Gosu::KbSpace
     if @difficulty == :hard
@@ -736,6 +773,9 @@ class AlienShooter2D < Gosu::Window
     end
 
     def update
+        if @scene == :name_input
+                update_name_input
+        end
         if @scene == :start 
                 update_start
         end
@@ -748,6 +788,8 @@ class AlienShooter2D < Gosu::Window
 
     def draw
         case @scene
+            when :name_input
+                draw_name_input
             when :start
                 draw_start
             when :ingame
