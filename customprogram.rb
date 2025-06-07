@@ -1,5 +1,6 @@
 #made by Nguyen Gia Bao Pham 
 require 'gosu'
+require_relative './models/score'
 
 module ZOrder 
   BACKGROUND, PLAYER, ALIENSHIP, BULLET, BLOOD, EXPLOSION, BOSS, HEART, COIN, BOSSLASER, UI = *0..10 
@@ -69,6 +70,7 @@ class AlienShooter2D < Gosu::Window
             @message = "You DIED!!!"
             @message2 = "Before you died, "
             @message3 = "Your score is #{@player.score}." 
+            
 
         end
       @bottom_message = "Press P to play again, or Q to quit."
@@ -76,7 +78,8 @@ class AlienShooter2D < Gosu::Window
       @scene = :end 
       @ending_music = Gosu::Song.new('Sounds/endingtheme.mp3')
       @ending_music.play(true)
-      
+    ::Score.create(name: "Bao", score: @player.score, difficulty: @difficulty.to_s, created_at: Time.now)
+
     end
 
 
@@ -370,6 +373,16 @@ class AlienShooter2D < Gosu::Window
         move_up @player if Gosu.button_down? Gosu::KB_UP 
         move_down @player if Gosu.button_down? Gosu::KB_DOWN 
 
+        if @player.lives <= 0 && !@score_saved
+            Score.create(
+                name: "Bao",
+                score: @player.score,
+                difficulty: @difficulty.to_s,
+                created_at: Time.now
+            )
+            @score_saved = true  # To prevent double saving
+        end
+
         if rand < @enemy_rate 
             @alienships.push (Alienship.new())
             @enemies_appeared += 1
@@ -564,7 +577,7 @@ class AlienShooter2D < Gosu::Window
         @bullets.push Bullet.new(@player.x + @player.center, @player.y)
       end
 
-    elsif @difficulty == :insane
+    elsif @difficulty == :insanex
       if @player.score >= 16000
         # Four bullets
         @bullets.push Bullet.new(@player.x + @player.center - 20, @player.y)
@@ -592,7 +605,7 @@ class AlienShooter2D < Gosu::Window
 
     @shooting_sound.play(1)
   end
-end
+    end
 
 
     def button_down_end(id)
