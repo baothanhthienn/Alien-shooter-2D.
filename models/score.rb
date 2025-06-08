@@ -19,6 +19,6 @@ unless db.table_exists?(:scores)
     String :name
     Integer :score
     String :difficulty
-    DateTime :created_at, default: Sequel::CURRENT_TIMESTAMP
+    DateTime Time.now.getlocal("+10:00")
   end
 end

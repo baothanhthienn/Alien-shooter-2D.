@@ -521,7 +521,7 @@ class AlienShooter2D < Gosu::Window
                     @player.lives += 1
                     @coin_absorp.play
             end
-
+        end
             
         @coins.each do |coin|   #increase score if player hit the coin
 
@@ -532,7 +532,7 @@ class AlienShooter2D < Gosu::Window
                     @coin_absorp.play
             end
         end
-    end
+    
 
           self.remove_bloods 
           self.remove_explosions 
