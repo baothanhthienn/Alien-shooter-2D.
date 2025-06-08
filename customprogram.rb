@@ -614,7 +614,7 @@ class AlienShooter2D < Gosu::Window
         @bullets.push Bullet.new(@player.x + @player.center, @player.y)
       end
 
-    elsif @difficulty == :insanex
+    elsif @difficulty == :insane
       if @player.score >= 16000
         # Four bullets
         @bullets.push Bullet.new(@player.x + @player.center - 20, @player.y)
